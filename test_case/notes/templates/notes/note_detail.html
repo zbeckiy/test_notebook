@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ note.title }}</h2>
+<p>{{ note.content }}</p>
+<p>{{ note.datetime_created }}</p>
+{% if note.is_favorite %}
+<p>FAVORITE</p>
+{% endif %}
+{% if user.is_authenticated %}
+{% if note.note_uuid %}
+<p>Note link: {{ current_url }}</p>
+<a href="{% url 'delete_uuid' pk=note.pk %}">Delete link</a>
+{% else %}
+<p>Note link is not generated <a href="{% url 'generate_uuid' pk=note.pk %}">Generate link?</a></p>
+{% endif %}
+<p><a href="{% url 'note_edit' note.pk %}">Edit</a></p>
+<p><a href="{% url 'note_list' %}">Back</a></p>
+{% endif %}
+{% endblock %}
